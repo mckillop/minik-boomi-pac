@@ -22,7 +22,7 @@ spec:
       securityContext:
         fsGroup: 1000
       containers:
-      - image: boomi/cloud
+      - image: boomi/cloud:release
         imagePullPolicy: Always
         name: atom-node
         ports:
