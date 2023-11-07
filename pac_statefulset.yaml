@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: pac
+  labels:
+    app: pac
+spec:
+  selector:
+    matchLabels:
+      app: pac
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: pac
+    spec:
+      terminationGracePeriodSeconds: 900
+      volumes:
+        - name: pac-storage
+          persistentVolumeClaim:
+            claimName: pv-volume
+      securityContext:
+        fsGroup: 1000
+      containers:
+      - image: boomi/cloud
+        imagePullPolicy: Always
+        name: atom-node
+        ports:
+        - containerPort: 9090
+          protocol: TCP
+        resources:
+          limits:
+            cpu: "1000m"
+            memory: "1024Mi"
+          requests:
+            cpu: "500m"
+            memory: "768Mi"
+        volumeMounts:
+          - name: pac-storage
+            mountPath: "/mnt/boomi"
+        readinessProbe:
+          periodSeconds: 10
+          initialDelaySeconds: 10
+          httpGet:
+            path: /_admin/readiness
+            port: 9090
+        livenessProbe:
+          periodSeconds: 60
+          httpGet:
+            path: /_admin/liveness
+            port: 9090
+        env:
+        - name: BOOMI_ATOMNAME
+          value: "boomi-pac"
+        - name: ATOM_LOCALHOSTID
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: INSTALL_TOKEN
+          value: "cloud-91ef5491-fae6-4ed9-9c37-b9548e872f42"
+        - name : BOOMI_ENVIRONMENTID
+          value: "40590140-dc5b-4c49-89f9-47f99641a0d4"
