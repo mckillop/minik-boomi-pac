@@ -33,7 +33,7 @@ spec:
             cpu: "1000m"
             memory: "1024Mi"
           requests:
-            cpu: "2g"
+            cpu: "2000m"
             memory: "768Mi"
         volumeMounts:
           - name: pac-storage
