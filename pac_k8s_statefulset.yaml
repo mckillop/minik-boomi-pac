@@ -8,6 +8,7 @@ spec:
   selector:
     matchLabels:
       app: pac
+  serviceName: "pac-service"      
   replicas: 2
   template:
     metadata:
