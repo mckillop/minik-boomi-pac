@@ -9,7 +9,7 @@ spec:
     matchLabels:
       app: pac
   serviceName: "pac-service"      
-  replicas: 2
+  replicas: 3
   template:
     metadata:
       labels:
@@ -58,6 +58,6 @@ spec:
             fieldRef:
               fieldPath: metadata.name
         - name: INSTALL_TOKEN
-          value: "cloud-43ce08f8-e751-4ab8-8d9d-359c6c8b1da5"
+          value: "cloud-6a55334f-2591-4cfc-9e8c-b1305fc4b6a5"
         - name : BOOMI_ENVIRONMENTID
           value: "40590140-dc5b-4c49-89f9-47f99641a0d4"
